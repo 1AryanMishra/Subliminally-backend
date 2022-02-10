@@ -28,7 +28,7 @@ export default async (req, res) => {
             titleString = titleString + titleStringg[i];
         }
     }
-    let link = `http://localhost:5000/?blog=${titleString}`;
+    let link = `https://subliminally.netlify.app/?blog=${titleString}`;
     res.status(201).json({
         posted : true,
         blogLink : link
