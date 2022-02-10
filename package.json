@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "start" : "node server.js"
+    "start": "node server.js"
   },
-  "type" : "module",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/1AryanMishra/Subliminal.git"
@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/1AryanMishra/Subliminal#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.2",
-    "firebase": "^9.6.3"
+    "mongoose": "^6.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
