@@ -8,6 +8,8 @@ import UpdatePost from './UpdatePost/UpdatePost.js';
 
 
 
+//Auth Headers will be asked when authorization is done
+
 
 
 const route = express.Router()
