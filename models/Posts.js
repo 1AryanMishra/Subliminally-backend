@@ -3,13 +3,34 @@ import mongoose from 'mongoose';
 
 const PostSchema = new mongoose.Schema({
     snip : mongoose.SchemaTypes.ObjectId,
-    content : []
+    title : String,
+    content : [],
+    interactions : {
+        likes : {
+            type : String,
+            default : 0
+        },
+        dislikes : {
+            type : String,
+            default : 0
+        }
+    },
 })
 
 
 const PostsSnippetSchema = new mongoose.Schema({
     title : String,
     snippet : [],
+    interactions : {
+        likes : {
+            type : String,
+            default : 0
+        },
+        dislikes : {
+            type : String,
+            default : 0
+        }
+    },
     createdAt : {
         immutable : true,
         type : Date,

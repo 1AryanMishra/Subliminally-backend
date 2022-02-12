@@ -10,8 +10,11 @@ import AuthorPage from './routes/AuthorPage/AuthorPage.js';
 
 const app = express();
 
+
+const origin = 'https://subliminally.netlify.app';
+//const origin = 'http://localhost:3000';
 app.use(cors({
-    origin : 'https://subliminally.netlify.app'
+    origin : origin
 }))
 
 app.use(express.json({limit : '15mb'}));

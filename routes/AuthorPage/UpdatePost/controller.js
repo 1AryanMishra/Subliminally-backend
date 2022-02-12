@@ -4,34 +4,47 @@ import mongoose from 'mongoose';
 import { Blog, BlogsSnippet } from '../../../models/Posts.js';
 
 
-export default async (req, res) => {
-    const snip = req.body.content.slice(0, 2);
-    const BlogSnip = await BlogsSnippet.create({
-        title : req.body.title,
+export default (req, res) => {
+    var snip;
+
+    if(req.body.content.length >= 3){
+        snip = req.body.content.slice(0, 2);
+    }
+    else{
+        snip = req.body.content;
+    }
+    //Blog Title
+    const BlogTitle = {title : req.body.title};
+    BlogsSnippet.updateOne(BlogTitle, {$set : {
+        title : req.body.newTitle,
         snippet : snip,
-    })
-    const MoreBlogData  = await Blog.create({
-        snip : BlogSnip._id,
-        content : req.body.content
-    })
-
-    BlogSnip.more = MoreBlogData._id;
-    BlogSnip.save();
-
-    const titleStringg = `${req.body.title}`;
-    var titleString = '';
-    for(let i = 0; i<titleStringg.length; i++){
-        if(titleStringg[i] === ' '){
-            titleString = titleString + '+';
+        updatedAt : Date()
+    }}, (err, blogSnipUpdateRes) => {
+        if(err){
+            console.log(`Error Occurred in Updating Post Snip! ${err}`);
         }
         else{
-            titleString = titleString + titleStringg[i];
+            console.log(`Post Snip Updated! ${blogSnipUpdateRes}`);
+            console.log('Updating Blog More Data...');
+            Blog.updateOne(BlogTitle, {$set : {
+                title : req.body.newTitle,
+                content : req.body.content
+            }}, (err, blogUpdateRes) => {
+                if(err){
+                    return console.log(`Error Occurred in Updating Post More Content! ${err}`);
+                }
+                else{
+                    console.log(`Post More Content Updated! ${blogUpdateRes}`);
+
+                    let link = `https://subliminally.netlify.app/blog/${req.body.title}`;
+                    //let link = `https://localhost:3000/blog/${req.body.title}`;
+                    
+                    return res.status(201).json({
+                        updated : true,
+                        blogLink : link
+                    })
+                }
+            })
         }
-    }
-    let link = `http://localhost:5000/?blog=${titleString}`;
-    
-    res.status(201).json({
-        posted : true,
-        blogLink : link
     })
 }
