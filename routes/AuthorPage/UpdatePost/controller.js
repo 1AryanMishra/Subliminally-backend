@@ -36,8 +36,18 @@ export default (req, res) => {
                 else{
                     console.log(`Post More Content Updated! ${blogUpdateRes}`);
 
-                    let link = `https://subliminally.netlify.app/blog/${req.body.title}`;
-                    //let link = `https://localhost:3000/blog/${req.body.title}`;
+                    var titleString = '?blog=';
+                    for(let i = 0; i<req.body.title.length; i++){
+                        if(req.body.title[i] === ' '){
+                            titleString = titleString + '+';
+                        }
+                        else{
+                            titleString = titleString + req.body.title[i];
+                        }
+                    }
+
+                    let link = `https://subliminally.netlify.app/${titleString}`;
+                    //let link = `https://localhost:3000/blog/${titleString}`;
                     
                     return res.status(201).json({
                         updated : true,
